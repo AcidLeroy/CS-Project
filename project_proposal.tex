@@ -1,0 +1,57 @@
+\documentclass[11pt, twoside]{article}   	% use "amsart" instead of "article" for AMSLaTeX format
+\usepackage{geometry}                		% See geometry.pdf to learn the layout options. There are lots.
+\geometry{letterpaper}                   		% ... or a4paper or a5paper or ... 
+%\geometry{landscape}                		% Activate for for rotated page geometry
+\usepackage[parfill]{parskip}    		% Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}				% Use pdf, png, jpg, or eps§ with pdflatex; use eps in DVI mode
+								% TeX will automatically convert eps --> pdf in pdflatex	
+\usepackage{amssymb}
+\usepackage{color}
+\usepackage{matlab-prettifier}
+\usepackage{verbatim}
+\usepackage{fancyvrb}
+\usepackage{multicol}
+\usepackage{bm}
+\lstset{style=Matlab-editor,basicstyle=\ttfamily}
+
+\sloppy
+\definecolor{lightgray}{gray}{0.5}
+\newenvironment{matlab}{\comment}{\endcomment}
+\newenvironment{matlabv}{\lstlisting}{\endlstlisting}	
+
+
+\title{Big Data Project Proposal}
+\author{Cody W. Eilar}
+
+\begin{document}
+\maketitle
+\section{Introduction}
+The advancing out of school learning in mathematics and engineering (AOLME) is program designed to help under 
+represented middle school students to become interested in science, technology, engineering and mathematics (STEM). The goal of
+the program is to not only provide these students with access to high quality programs, but to also help educators analyze
+what learning methods work well in the classroom. Using video cameras in the classroom, AOLME attempts to capture 
+thousands of hours of student to student and student to facilitator interactions. The goal is then to analyze these videos
+to further help educators understand what is working in the classroom and what is not, i.e. when students are learning or when they are not. The problem with this currently is that
+all the videos must be annotated by hand which is very time consuming and tedious. To aid educators with their research, 
+it would be extremely useful to have automated methods for annotating videos autonomously using machine learning and 
+video processing techniques. Because AOLME has so many videos, it seems that "big data" techniques may also be a
+good fit for solving the problem of autonomous video annotation. In the following sections, I will outline how I think
+"big data" techniques can be applied to solving this difficult problem. 
+
+\section{Proposal}
+The problem that AOLME is trying to solve is very difficult at an engineering level. There have been several published
+papers on action recognition using support vector machines (SVMs) in combination with motion vectors, but there is still
+much research to be done in this area. The datasets that are provided by AOLME are perfect for this type of research because
+of the large number of videos that are available. Providing access to these videos though is not simple because of their 
+sensitivity and thus an IRB must be completed before any researcher may use the videos. However, if the videos had blurred 
+faces they could be used more freely. For this reason, I believe AOLME would benefit from a program that could systematically 
+process the terabytes of video data and create a "clean" dataset that can more easily distributed amongst researchers by 
+blurring the faces of the students. The vision is described further in the following sections. 
+
+\subsection{Terabytes of Videos} 
+\subsection{Machine Learning Aspects}
+
+\end{document}
+
+
+
