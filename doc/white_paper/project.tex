@@ -49,7 +49,7 @@
 %----------------------------------------------------------------------
 % Title Information, Abstract and Keywords
 %----------------------------------------------------------------------
-\title{Face Obscuration using Big Data Processing Techniques}
+\title{Face Obscuration Using Big Data Processing Techniques}
 
 % format author this way for journal articles.
 % MAKE SURE THERE ARE NO SPACES BEFORE A \member OR \authorinfo
@@ -179,12 +179,70 @@ is nothing more than a subset of a well researched area known as
 pattern recognition. In the subsequent section, we introduce some
 of the basic techniques for extracting faces using statistical 
 learning theory. Most of the information about this area comes
-references \cite{face_recog} and \cite{kernel_learning}.
+references \cite{face_recog_book} and \cite{kernel_learning}.
 \subsection{Face Detection In Images}
 There are many techniques for classifying images such as neural
 networks (NN) \cite{face_neural_net}, template matching \cite{face_template}, support vector machines (SVM) \cite{face_svm}, 
 nonnegative matrix factorization (NMF) \cite{face_mat_fact}, subspace analysis \cite{face_subspace_analysis}, 
 elastic graph matching \cite{face_elastic_bunch}, and finally principal component analysis (PCA) \cite{face_kpca}. 
+Though there are many different types of face recognition, in this paper we 
+will focus directly on using Eigenfaces and SVMs. It should be noted 
+that some algorithms are very good at determining to whom a face
+belongs, but we are only interested in answering the question  
+``is this a face?''. In fact, it is more important to uphold the IRB
+to have a 100\% accuracy rate at the cost of some false positives.
+
+\subsubsection{Eigenfaces}
+Computing the \textit{eigenfaces} is nothing more than using PCA \cite{eigen_faces}. 
+The goal with computing the so-called \textit{eigenfaces} is to lower the dimensionality
+of an image (or picture) to only its principal components, that is to say
+that only relatively small number of dimensions should be used
+to sufficiently identify pictures \cite{eigen_faces}. To put this in 
+terms of mathematics, we wish to find the eigenvectors of the covariance
+matrix for any given set of images \cite{eigen_face_recognition}. To 
+illustrate why this is important, if we have a face image that is defined 
+as $I(x,y)_{N \times N}$ where $x$ a column, $y$ is a row and $N$ is the
+number of rows and columns, an image that is 256 contains 65,536 elements.
+This is to that $I$ has 65,536 dimensions which is a very large number
+and not very scalable. Hence PCA or Karhunen-Loeeve expansion is 
+applied to find the principle components. These components, or 
+eigenvectors coined the name \textit{eigenfaces}. These vectors are thus
+used to find the important features in a face image. In order to compute
+these vectors, first we
+find the average face in a set which is shown in Equation \ref{eq:average_face}
+
+\begin{align}
+  \mathbf{\Psi} &= \frac{1}{M} \sum_{n=1}^{M}\Gamma_n \label{eq:average_face}
+\end{align}
+
+$\mathbf{\Psi}$ is the average face determined by the total number of faces
+in the training set $M$ over all the training images $\Gamma_n$. From 
+here we find $M$ orthogonal vectors $\mathbf{u}_n$ and the eigenvalues
+$\lambda_k$. Then the vectors $\mathbf{u}_k$ and $\lambda_k$ are the 
+eigenvectors and eigenvalues of the covariance matrix show in Equation
+\ref{eq:cov_matrix}.
+
+
+\begin{align}
+  C &= \frac{1}{M} \sum_{n=1}^M \mathbf{\Phi}_n \mathbf{\Phi}_n^T \label{eq:cov_matrix} \\
+  &= AA^T
+\end{align}
+
+Here $\mathbf{\Phi}$ is an $M \times M$ matrix  which is all the 
+training faces minus the average of the training faces which is
+shown in Equation \ref{eq:subtract_bias}
+
+
+\begin{align}
+  \mathbf{\Phi} &= \Gamma_i - \mathbf{\Psi} \label{eq:subtract_bias}
+\end{align}
+
+The covariance matrix shown in equation \ref{eq:cov_matrix} ends up
+being an $N^2 \times N^2$ ($N$ is the number of elements in a given 
+face image) matrix and finding the eigenvalues for 
+this matrix becomes intractable \cite{eigen_face_recognition}. The 
+technique to reduce this relies on taking a linear combination of the 
+$M \times M$ matrix and using the resulting vectors \cite{turk_eigen_faces}.
 
 \subsection{Face Removal}
 
