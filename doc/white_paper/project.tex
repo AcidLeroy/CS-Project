@@ -1,0 +1,170 @@
+\documentclass[
+	%draft,
+	submission,
+	%compressed,
+	final,
+	%
+	%technote,
+	%internal,
+	%submitted,
+	%inpress,
+	%reprint,
+	%
+	%titlepage,
+	notitlepage,
+	%anonymous,
+	narroweqnarray,
+	inline,
+	twoside,
+  %invited,
+	]{ieee}
+
+\newcommand{\latexiie}{\LaTeX2{\Large$_\varepsilon$}}
+
+%\usepackage{ieeetsp}	% if you want the "trans. sig. pro." style
+%\usepackage{ieeetc}	% if you want the "trans. comp." style
+%\usepackage{ieeeimtc}	% if you want the IMTC conference style
+\usepackage{graphicx}
+\usepackage{cite}
+\usepackage{url}
+% Use the `endfloat' package to move figures and tables to the end
+% of the paper. Useful for `submission' mode.
+%\usepackage {endfloat}
+
+% Use the `times' package to use Helvetica and Times-Roman fonts
+% instead of the standard Computer Modern fonts. Useful for the 
+% IEEE Computer Society transactions.
+%\usepackage{times}
+% (Note: If you have the commercial package `mathtime,' (from 
+% y&y (http://www.yandy.com), it is much better, but the `times' 
+% package works too). So, if you have it...
+%\usepackage {mathtime}
+
+% for any plug-in code... insert it here. For example, the CDC style...
+%\usepackage{ieeecdc}
+
+\begin{document}
+
+%----------------------------------------------------------------------
+% Title Information, Abstract and Keywords
+%----------------------------------------------------------------------
+\title{Face Obscuration using Big Data Processing Techniques}
+
+% format author this way for journal articles.
+% MAKE SURE THERE ARE NO SPACES BEFORE A \member OR \authorinfo
+% COMMAND (this also means `don't break the line before these
+% commands).
+\author[EILAR AND VENKATESH]{Cody W. Eilar
+       \authorinfo{C.\,W.\,Eilar is with the Department of Computer
+       Engineering, University of New Mexico, Albuquerque, NM 87109.
+       Phone: $+$1\,505\,514-5961, e-mail: ceilar@unm.edu}%
+       \and{} Venkatesh Jatla 
+       \authorinfo{V.\, Jatla is with the Department of Computer
+       Engineering, University of New Mexico, Albuquerque, NM 87109.
+       Phone: $+$1\,505\,908-7361, e-mail: venkatesh369@unm.edu}
+}
+
+\journal{CS 567, Big Data}
+\titletext{ \today \ Dr. Trilce Estrada}
+%\ieeecopyright{0018--9456/97\$10.00 \copyright\ 1997 IEEE}
+%\lognumber{xxxxxxx}
+%\pubitemident{S 0018--9456(97)09426--6}
+%\loginfo{Manuscript received September 27, 1997.}
+\firstpage{1}
+
+%\confplacedate{Ottawa, Canada, May 19--21, 1997}
+\maketitle               
+
+%----------------------------------------------------------------------
+% ABSTRACT
+%----------------------------------------------------------------------
+\begin{abstract} 
+  With big data processing techniques and tools becoming ubiquitous, it
+  is now more feasible than ever to process images and videos over 
+  distributed computing environments using tools such as Hadoop \cite{hadoop}, Spark \cite{spark}, Storm \cite{storm} and others. 
+
+  In this paper, we investigate 
+  using these "big-data" techniques to perform face obscuration on very large
+  video and image datasets collected by the Advancing Out of School Learning in 
+  Mathematics and Engineering (AOLME) program so that these datasets can be redistributed for further
+  investigation by researchers who do not have special permissions to view 
+  them. By removing the faces in these videos, researchers who are focused
+  on gestures and actions can work with data without having to be 
+  part of any institutional review board (IRB) process.  
+\end{abstract}
+
+
+%----------------------------------------------------------------------
+% SECTION Background and Theory
+%----------------------------------------------------------------------
+\section{Background}
+\PARstart The advancing out of school learning in mathematics and engineering (AOLME) is program designed to help under 
+represented middle school students to become interested in science, technology, engineering and mathematics (STEM). The goal of
+the program is to not only provide these students with access to high quality programs, but to also help educators analyze
+what learning methods work well in the classroom \cite{aolme_paper}. Using video cameras in the classroom, AOLME attempts to capture 
+thousands of hours of student to student and student to facilitator interactions. The goal is then to analyze these videos
+to further aid educators understand what is working in the classroom and what is not, i.e. when students are learning or when they are not. 
+The problem with this currently is that
+all the videos must be annotated by hand which is very time consuming and tedious. To aid educators with their research, 
+it would be extremely useful to have automated methods for annotating videos using machine learning and 
+video processing techniques. Because AOLME has a vast array of videos, it seems that "big data" techniques are a
+good fit for solving the problem of autonomous video annotation.
+
+The list of potential features that can be extracted from this video data is vast, we
+therefore need to narrow the scope of features for
+which we can track to a limited subset. Due to restrictions of the IRB, 
+it was natural to select features which did not involve the students faces
+such as when a student is typing or writing. Since these are the desirable 
+features, we no longer needed to have the faces of the students in the videos
+and in order to collaborate with other researchers that do not have IRB
+approval, we needed a way to remove the faces of the students so that
+we could freely distribute the videos. 
+
+Even with a subset of features, there is still much research to be done
+in the fields of activity recognition and motion classification \cite{machine_perception}.
+Some research involves using action banks \cite{action_bank} which involves
+creating very large banks of actions to create feature vectors 
+to classify with support vector machines (SVM). Action banks
+can be though of as an extension to object banks. Other techniques involve 
+using principal component analysis (PCA) \cite{face_recog_book} to 
+detect what features actually contribute to training the classifier.
+Regardless of the technique though, there is an obvious need for
+research in these fields.
+
+To support further investigation in these fields, we want to make the videos that are available
+in the AOLME database more accessible to researchers interested in 
+activity recognition and motion classification. In order to do this, 
+we need to clean the dataset by removing the faces to satisfy the requirements
+of the IRB.
+
+Face recognition is a well studied field because it has applications in 
+social media, law enforcement, education, and a myriad of others. There is a 
+variety of texts that are available to use as references for this paper such
+as \cite{face_recog_book} \cite{kernel_learning} \cite{machine_face_recog}.
+
+%----------------------------------------------------------------------
+% SECTION THEORY 
+%----------------------------------------------------------------------
+\section{Theory}
+\PARstart Introduce the theory of isolating faces in images.
+\subsection{Face Detection In Images}
+\subsection{Face Removal}
+
+
+%----------------------------------------------------------------------
+% SECTION METHODOLOGY 
+%----------------------------------------------------------------------
+\section{Methodology} 
+\subsection{Machine Learning} 
+\subsection{Distributed Computing}
+
+%----------------------------------------------------------------------
+% SECTION Conclusion 
+%----------------------------------------------------------------------
+\section{Conclusion}
+\PARstart Conclusion to paper
+
+\bibliography{project.bib}
+\bibliographystyle{ieeetr}
+
+\end{document}
