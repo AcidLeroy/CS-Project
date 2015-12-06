@@ -15,7 +15,7 @@ sc = SparkContext(conf=conf)
 tsc = ThunderContext(sc)
 
 # Load image using thunder
-data = tsc.loadExample('fish-images')
+data = tsc.loadImages('/home/vj/Desktop/CS-Project/src/Tutorials/mush.png',inputFormat='png')
 img  = data.first()[1]
 
 # Display image using Sci-kit image
