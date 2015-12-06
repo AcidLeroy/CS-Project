@@ -27,6 +27,7 @@
 \usepackage{graphicx}
 \usepackage{cite}
 \usepackage{url}
+\usepackage{amsmath}
 % Use the `endfloat' package to move figures and tables to the end
 % of the paper. Useful for `submission' mode.
 %\usepackage {endfloat}
@@ -171,8 +172,20 @@ IRB access.
 % SECTION THEORY 
 %----------------------------------------------------------------------
 \section{Theory}
-\PARstart Introduce the theory of isolating faces in images.
+\PARstart As mentioned in the introduction, face detection is a well 
+studied field because of all the applications that involved with 
+being able to determine where faces are in data. Face recognition
+is nothing more than a subset of a well researched area known as 
+pattern recognition. In the subsequent section, we introduce some
+of the basic techniques for extracting faces using statistical 
+learning theory. Most of the information about this area comes
+references \cite{face_recog} and \cite{kernel_learning}.
 \subsection{Face Detection In Images}
+There are many techniques for classifying images such as neural
+networks (NN) \cite{face_neural_net}, template matching \cite{face_template}, support vector machines (SVM) \cite{face_svm}, 
+nonnegative matrix factorization (NMF) \cite{face_mat_fact}, subspace analysis \cite{face_subspace_analysis}, 
+elastic graph matching \cite{face_elastic_bunch}, and finally principal component analysis (PCA) \cite{face_kpca}. 
+
 \subsection{Face Removal}
 
 
