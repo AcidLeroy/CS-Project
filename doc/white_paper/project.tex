@@ -242,6 +242,18 @@ or three cascades shown in Figure \ref{fig:haar_cascades}.
 \label{fig:haar_cascades} 
 \end{figure}
 
+Because of their tunable nature, the Haar cascade threshold
+can be cranked up to detect 100\% of the faces with some false 
+positive rate. This will be especially important for our case
+since the data with which we are dealing is sensitive. 
+
+We have now shown that using Haar cascades are ideal for our 
+particular case because they are both computationally efficient
+making them easy to run on large image sets and can also be 
+very accurate in detecting when a face is present. Furthermore, 
+there are many tools such as OpenCV \cite{opencv} which already have
+efficient implementations of this algorithm in both C++ and Python. 
+
 \subsubsection{Eigenfaces for Face Recognition}
 Computing the \textit{eigenfaces} is nothing more than using PCA \cite{eigen_faces}. 
 The goal with computing the so-called \textit{eigenfaces} is to lower the dimensionality
@@ -340,9 +352,10 @@ distributed computing tools.
 
 The cylindrical shapes shown in Figure \ref{fig:distributed_computing_model}
 represent the actual data. In order to construct our statistical learning model,
-we need a large database of just faces to create our \textit{eigenfaces}
+we need a large database of just faces to create the Haar cascade model
 and then from there we can use that model detect the faces in the AOLME
-videos. In following sections, we will describe some of the 
+videos. This then would be easily extensible to then determine
+which face a given face belongs to. In following sections, we will describe some of the 
 fundamental aspects of splitting this diagram up to make use of Spark's
 distributed data processing model. 
 
@@ -370,11 +383,11 @@ in Figure \ref{fig:spark_model}.
 \FloatBarrier
 
 This paradigm allows us to then have a very large dataset over many compute
-nodes and perform facial recognition efficiently and reliably to then 
+nodes and perform facial detection efficiently and reliably to then 
 remove faces from the sensitive video data. Future work in this area
-could be to us Spark's streaming API to perform near real-time face recognition. 
-This would allow us to remove the faces in the video without having to 
-change much code. 
+could be to us Spark's streaming API to perform near real-time face detection. 
+This would then allow us to remove faces in real-time without having to 
+modify much of our existing code. 
 
 %----------------------------------------------------------------------
 % SECTION METHODOLOGY 
