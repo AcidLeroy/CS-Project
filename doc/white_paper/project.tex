@@ -179,12 +179,29 @@ is nothing more than a subset of a well researched area known as
 pattern recognition. In the subsequent section, we introduce some
 of the basic techniques for extracting faces using statistical 
 learning theory. Most of the information about this area comes
-references \cite{face_recog} and \cite{kernel_learning}.
+references \cite{face_recog_book} and \cite{kernel_learning}.
 \subsection{Face Detection In Images}
 There are many techniques for classifying images such as neural
 networks (NN) \cite{face_neural_net}, template matching \cite{face_template}, support vector machines (SVM) \cite{face_svm}, 
 nonnegative matrix factorization (NMF) \cite{face_mat_fact}, subspace analysis \cite{face_subspace_analysis}, 
 elastic graph matching \cite{face_elastic_bunch}, and finally principal component analysis (PCA) \cite{face_kpca}. 
+Though there are many different types of face recognition, in this paper we 
+will focus directly on using Eigenfaces and SVMs. It should be noted 
+that some algorithms are very good at determining to whom a face
+belongs, but we are only interested in answering the question "
+is this a face?". In fact, it is more important to uphold the IRB
+to have a 100\% accuracy rate at the cost of some false positives.
+
+\subsubsection{Eigenfaces}
+Computing the "eigenfaces" is nothing more than using PCA \cite{eigen_faces}. 
+The goal with computing the so-called eignefaces is to lower the dimensionality
+of an image (or picture) to only its principal components, that is to say
+that only relatively small number of dimensions should be used
+to sufficiently identify pictures \cite{eigen_faces}. To put this in 
+terms of mathematics, we wish to find the eigenvectors of the covariance
+matrix for any given set of images \cite{eigen_face_recognition}.
+
+
 
 \subsection{Face Removal}
 
