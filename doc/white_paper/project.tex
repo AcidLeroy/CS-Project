@@ -28,6 +28,7 @@
 \usepackage{cite}
 \usepackage{url}
 \usepackage{amsmath}
+\usepackage{placeins}
 % Use the `endfloat' package to move figures and tables to the end
 % of the paper. Useful for `submission' mode.
 %\usepackage {endfloat}
@@ -173,7 +174,7 @@ IRB access.
 %----------------------------------------------------------------------
 \section{Theory}
 \PARstart As mentioned in the introduction, face detection is a well 
-studied field because of all the applications that involved with 
+studied field because of all the applications that are involved with 
 being able to determine where faces are in data. Face recognition
 is nothing more than a subset of a well researched area known as 
 pattern recognition. In the subsequent section, we introduce some
@@ -243,8 +244,54 @@ face image) matrix and finding the eigenvalues for
 this matrix becomes intractable \cite{eigen_face_recognition}. The 
 technique to reduce this relies on taking a linear combination of the 
 $M \times M$ matrix and using the resulting vectors \cite{turk_eigen_faces}.
+From this point, we can now use these \textit{eigenfaces} to classify
+a face within an image. The process for doing is the following: 
+\begin{itemize}
+  \item Receive new face, $\Gamma$ that was not previously seen in the
+    training data. 
+  \item Project $\Gamma$ into the face space by $\omega_k = \mathbf{u}_k^T (\Gamma - \Psi)$
+    for $k = 1 ... M'$ and $M'$ is the number of eigenvectors that are 
+    needed to properly classify a face from the input space of $N^2$.
+  \item We now have a list, $\omega_k$ of potential matches so now we just need
+    to compute the minimum Euclidean distance (or some other any other metric). 
+    For example $\epsilon_k = ||\bar{\omega} - \omega_k ||$ where $\bar{\omega}$
+    is the mean of the face vectors. 
+\end{itemize}
 
-\subsection{Face Removal}
+Once the face has been detected, it is then trivial to remove it
+from the image by simply replacing each pixel with some noise function, 
+like a Gaussian blur, to sufficiently hide the subjects face without
+changing the over statistics of the image too drastically. It is
+important not change the statics of the image because by doing so
+could make the videos useless to those performing calculations 
+related to activity classification or gesture recognition. It should 
+also be noted that the above algorithm can be extended to the non-linear
+PCA case using the \textit{Kernel Trick} as discussed in \cite{face_kpca}. 
+Discussion of the performance of various kernel methods can be found in 
+\cite{kernel_learning}.
+
+\subsection{Distributing \textit{Eigenfaces} to Big Data Processes}
+Most implementations of face recognition rely on the fact that
+all the data is located on one disk and is run on a single machine. 
+For this paper, we do not make that assumption and explore the use
+of tools such as Spark \cite{spark} and Storm \cite{storm} to create
+resilient data that is both resilient and distributed so that many 
+calculations can be performed. Figure \ref{fig:distributed_computing_model} 
+illustrates our current data structure without the use of any
+distributed computing tools.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\linewidth]{figures/face_detection_block_diagram}
+\caption{Distributed computing model for removing faces from AOLME data.}
+\label{fig:distributed_computing_model} 
+\end{figure}
+
+\FloatBarrier
+
+The cylindrical shapes shown in Figure \ref{fig:distributed_computing_model}
+represent the databases that are to be used for performing the face
+detection and face removal
 
 
 %----------------------------------------------------------------------
