@@ -148,7 +148,24 @@ faces in a few images and therefore there is room for research in the area
 face detection using big data processing techniques. In this paper, we
 would like to address this topic by looking at using OpenCV, scikit-image, 
 Spark and Storm software packages for processing images in very large
-video datasets. 
+video datasets.
+
+The rest of the paper structured as follows: in the theory section we 
+present some of the current techniques for facial recognition using 
+machine learning to extract features that are necessary for face 
+classification. We go over the theory of feature extraction and encoding, 
+image-based classifiers, adaptive similarity threshold and temporal filtering. 
+In the methodology section, we explain how we can take some of these
+techniques and apply them using big data processing techniques. 
+We explore experimental set-up and software utilization. It is 
+important here that we show how we can leverage existing techniques
+to explore some of this large video data effectively using distributed
+files systems such as the Hadoop Distributed File System (HDFS) \cite{hadoop}. 
+Finally, we explain in the conclusions section how well our 
+implementation of face recognition worked with respect to 
+performance, accuracy, and feasibility for use with AOLME to
+ anonymize the videos for analysis by researchers who do not have
+IRB access.  
 
 %----------------------------------------------------------------------
 % SECTION THEORY 
@@ -162,7 +179,7 @@ video datasets.
 %----------------------------------------------------------------------
 % SECTION METHODOLOGY 
 %----------------------------------------------------------------------
-\section{Methodology} 
+\section{Methodology and Experiments} 
 \subsection{Machine Learning} 
 \subsection{Distributed Computing}
 
