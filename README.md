@@ -18,3 +18,5 @@ python2 SciKitLearn_face_recognition.py
 
 ###Loading and displaying image using {thunder} and {Scikit-image}
 thunder LoadAndDisplayImage.py
+###Loading and displaing image using {thudner} and {OpenCV2}
+thunder src/Tutorials/ThunderCv2.py
