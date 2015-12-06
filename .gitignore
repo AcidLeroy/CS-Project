@@ -2,3 +2,7 @@
 *.aux
 *.log
 *.gz
+.DS_Store
+*.swp
+*.bbl
+*.blg
