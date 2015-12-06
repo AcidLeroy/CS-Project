@@ -192,8 +192,57 @@ that some algorithms are very good at determining to whom a face
 belongs, but we are only interested in answering the question  
 ``is this a face?''. In fact, it is more important to uphold the IRB
 to have a 100\% accuracy rate at the cost of some false positives.
+However, we include eigenfaces in this paper as 
+an extension that can be used in later works for those who have IRB approval. 
 
-\subsubsection{Eigenfaces}
+\subsubsection{Haar Cascades For Face Detection}
+Haar Cascades are a well known method in machine learning for rapid object
+detection with a high accuracy rate \cite{haar_cascades}. The basic idea
+behind the algorithm is that you train the machine with many positive samples
+and many negative samples. In our case, we need to train our classifier using
+images that contain faces and images that do not. At the heart of the algorithm
+is a method of simplifying features instead of using pixel values to classify, 
+this is known as an integral image. Equation \ref{eq:integral_image} illustrates
+the idea of an integral image. 
+
+
+\begin{align}
+  ii(x,y) = \sum_{x' \leq x, y' \leq y} i(x', y') \label{eq:integral_image}
+\end{align}
+
+$x$ and $y$ are the respective columns and rows, and $ii(x,y)$ is the resulting integral
+image. This procedure can be done in one pass of the image and greatly reduces
+the size of an image. Once the integral image has been determined, we can use
+any number of machine learning algorithms to extract the features. In the case of
+the Haar Cascades, the \textit{AdaBoost} algorithm was used. We will not go
+into the details of that algorithm here. But essentially the \textit{AdaBoos} algorithm 
+is designed to select the single rectangle feature which best separates
+the positive from the negative samples. A threshold is thus needed $\theta_j$
+to determine what amount of misclassification is necessary. 
+
+
+\begin{equation}
+   h_j(x) = \begin{cases}
+     1  & \text{if} p_jf_j(x) < p_j \theta_j \\
+     0 & otherwise
+        \end{cases}
+\end{equation}
+
+This classifier is then used at each stage of a cascaded system of classifiers
+to reject certain features. For example, if the threshold succeeds for stage one
+then it proceeds to the next stage or is immediately rejected. In \cite{haar_cascades}, 
+they design each cascade around each convolution kernel shown in Figure 
+\ref{fig:haar_cascades}. There would therefore be a total of three stages
+or three cascades shown in Figure \ref{fig:haar_cascades}.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\linewidth]{figures/haar_features}
+\caption{Different convolution kernels used on sub-images..}
+\label{fig:haar_cascades} 
+\end{figure}
+
+\subsubsection{Eigenfaces for Face Recognition}
 Computing the \textit{eigenfaces} is nothing more than using PCA \cite{eigen_faces}. 
 The goal with computing the so-called \textit{eigenfaces} is to lower the dimensionality
 of an image (or picture) to only its principal components, that is to say
@@ -203,7 +252,7 @@ terms of mathematics, we wish to find the eigenvectors of the covariance
 matrix for any given set of images \cite{eigen_face_recognition}. To 
 illustrate why this is important, if we have a face image that is defined 
 as $I(x,y)_{N \times N}$ where $x$ a column, $y$ is a row and $N$ is the
-number of rows and columns, an image that is 256 contains 65,536 elements.
+number of rows and columns, an image, for example, that is $256 \times 256$ contains 65,536 elements.
 This is to that $I$ has 65,536 dimensions which is a very large number
 and not very scalable. Hence PCA or Karhunen-Loeeve expansion is 
 applied to find the principle components. These components, or 
@@ -290,9 +339,42 @@ distributed computing tools.
 \FloatBarrier
 
 The cylindrical shapes shown in Figure \ref{fig:distributed_computing_model}
-represent the databases that are to be used for performing the face
-detection and face removal
+represent the actual data. In order to construct our statistical learning model,
+we need a large database of just faces to create our \textit{eigenfaces}
+and then from there we can use that model detect the faces in the AOLME
+videos. In following sections, we will describe some of the 
+fundamental aspects of splitting this diagram up to make use of Spark's
+distributed data processing model. 
 
+\subsubsection{Spark: Resilient Distributed Datasets}
+Apache Spark is a framework for cluster computing that allows for multi-stage
+in-memory processing which in contrast to Hadoop's two-stage MapReduce
+framework \cite{spark} \cite{hadoop}. This makes spark ideal for
+processing large sets of data quickly, and since it is also built 
+on top of Hadoop, can have access to HDFS \cite{spark}. So in order
+to leverage this framework, we transform our input data (such as videos
+and images) into a format known as a resilient distributed dataset 
+or RDD. An RDD is the basic abstraction that the programmer uses
+to move data around in a Spark application. It is resilient because
+if a single compute node goes down on a distributed network, it does
+not stop processing and it is distributed because all the data is 
+accessible from every other compute node. This paradigm is illustrated
+in Figure \ref{fig:spark_model}.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\linewidth]{figures/spark_model}
+\caption{Overview of Sparks architecture, image acquired from \cite{spark}.}
+\label{fig:spark_model} 
+\end{figure}
+\FloatBarrier
+
+This paradigm allows us to then have a very large dataset over many compute
+nodes and perform facial recognition efficiently and reliably to then 
+remove faces from the sensitive video data. Future work in this area
+could be to us Spark's streaming API to perform near real-time face recognition. 
+This would allow us to remove the faces in the video without having to 
+change much code. 
 
 %----------------------------------------------------------------------
 % SECTION METHODOLOGY 
