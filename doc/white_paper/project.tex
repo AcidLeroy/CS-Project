@@ -88,11 +88,11 @@
   In this paper, we investigate 
   using these "big-data" techniques to perform face obscuration on very large
   video and image datasets collected by the Advancing Out of School Learning in 
-  Mathematics and Engineering (AOLME) program so that these datasets can be redistributed for further
-  investigation by researchers who do not have special permissions to view 
-  them. By removing the faces in these videos, researchers who are focused
-  on gestures and actions can work with data without having to be 
-  part of any institutional review board (IRB) process.  
+  Mathematics and Engineering (AOLME) program so that these datasets can be 
+  safely redistributed. As ulterior motive, we also set in place a frame for
+  which we would use to perform other types of detections and activity 
+  recognition studies. For the purpose of this paper, we do not use any images
+  from the real AOLME dataset, but rather images to illustrate our intention. 
 \end{abstract}
 
 
@@ -105,7 +105,7 @@ represented middle school students to become interested in science, technology, 
 the program is to not only provide these students with access to high quality programs, but to also help educators analyze
 what learning methods work well in the classroom \cite{aolme_paper}. Using video cameras in the classroom, AOLME attempts to capture 
 thousands of hours of student to student and student to facilitator interactions. The goal is then to analyze these videos
-to further aid educators understand what is working in the classroom and what is not, i.e. when students are learning or when they are not. 
+to further aid educators in understanding what is working in the classroom and what is not, i.e. when students are learning or when they are not. 
 The problem with this currently is that
 all the videos must be annotated by hand which is very time consuming and tedious. To aid educators with their research, 
 it would be extremely useful to have automated methods for annotating videos using machine learning and 
@@ -120,20 +120,20 @@ such as when a student is typing or writing. Since these are the desirable
 features, we no longer needed to have the faces of the students in the videos
 and in order to collaborate with other researchers that do not have IRB
 approval, we needed a way to remove the faces of the students so that
-we could freely distribute the videos. 
+we could more easily distribute the videos. 
 
 Even with a subset of features, there is still much research to be done
 in the fields of activity recognition and motion classification \cite{machine_perception}.
-Some research involves using action banks \cite{action_bank} which involves
+Some research uses action banks \cite{action_bank} which involves
 creating very large banks of actions to create feature vectors 
-to classify with support vector machines (SVM). Action banks
+and classify them with support vector machines (SVM). Action banks
 can be though of as an extension to object banks. Other techniques involve 
 using principal component analysis (PCA) \cite{face_recog_book} to 
 detect what features actually contribute to training the classifier.
 Regardless of the technique though, there is an obvious need for
 research in these fields.
 
-To support further investigation in these fields, we want to make the videos that are available
+To further this research, we want to make the videos that are available
 in the AOLME database more accessible to researchers interested in 
 activity recognition and motion classification. In order to do this, 
 we need to clean the dataset by removing the faces to satisfy the requirements
@@ -144,11 +144,11 @@ social media, law enforcement, education, and a myriad of others. There is a
 variety of texts that are available to use as references for this paper such
 as \cite{face_recog_book} \cite{kernel_learning} \cite{machine_face_recog} 
 as well as many software tools such as OpenCV \cite{opencv} and scikit-image
-\cite{scikit-image}. There is, however work to be done in the areas of
-big data. Most applications focus on real-time face tracking, or finding
-faces in a few images and therefore there is room for research in the area
-face detection using big data processing techniques. In this paper, we
-would like to address this topic by looking at using OpenCV, scikit-image, 
+\cite{scikit-image}. However, the literature in applying these techniques to 
+big data limited. Most applications focus on real-time face tracking, or finding
+faces in a few hundred images and therefore there is room for research in the area
+face detection using big data processing techniques. In this paper, we address 
+this topic by looking at using OpenCV, scikit-image, 
 Spark and Storm software packages for processing images in very large
 video datasets.
 
@@ -187,7 +187,7 @@ networks (NN) \cite{face_neural_net}, template matching \cite{face_template}, su
 nonnegative matrix factorization (NMF) \cite{face_mat_fact}, subspace analysis \cite{face_subspace_analysis}, 
 elastic graph matching \cite{face_elastic_bunch}, and finally principal component analysis (PCA) \cite{face_kpca}. 
 Though there are many different types of face recognition, in this paper we 
-will focus directly on using Eigenfaces and SVMs. It should be noted 
+will focus directly on using Eigenfaces, Haar cascasdes, and SVMs. It should be noted 
 that some algorithms are very good at determining to whom a face
 belongs, but we are only interested in answering the question  
 ``is this a face?''. In fact, it is more important to uphold the IRB
@@ -233,7 +233,7 @@ to reject certain features. For example, if the threshold succeeds for stage one
 then it proceeds to the next stage or is immediately rejected. In \cite{haar_cascades}, 
 they design each cascade around each convolution kernel shown in Figure 
 \ref{fig:haar_cascades}. There would therefore be a total of three stages
-or three cascades shown in Figure \ref{fig:haar_cascades}.
+or three stages to the cascade shown in Figure \ref{fig:haar_cascades}.
 
 \begin{figure}[h]
 \centering
@@ -250,9 +250,13 @@ since the data with which we are dealing is sensitive.
 We have now shown that using Haar cascades are ideal for our 
 particular case because they are both computationally efficient
 making them easy to run on large image sets and can also be 
-very accurate in detecting when a face is present. Furthermore, 
+very accurate in detecting when a face is present. To then remove the face
+from the image would then be a trivial task of applying a Gaussian 
+blur with a sufficient mean and variance to hide the subjects face 
+entirely. Furthermore, 
 there are many tools such as OpenCV \cite{opencv} which already have
 efficient implementations of this algorithm in both C++ and Python. 
+
 
 \subsubsection{Eigenfaces for Face Recognition}
 Computing the \textit{eigenfaces} is nothing more than using PCA \cite{eigen_faces}. 
@@ -319,25 +323,24 @@ a face within an image. The process for doing is the following:
     is the mean of the face vectors. 
 \end{itemize}
 
-Once the face has been detected, it is then trivial to remove it
-from the image by simply replacing each pixel with some noise function, 
-like a Gaussian blur, to sufficiently hide the subjects face without
-changing the over statistics of the image too drastically. It is
-important not change the statics of the image because by doing so
-could make the videos useless to those performing calculations 
-related to activity classification or gesture recognition. It should 
-also be noted that the above algorithm can be extended to the non-linear
+It should also be noted that the above algorithm can be extended to the non-linear
 PCA case using the \textit{Kernel Trick} as discussed in \cite{face_kpca}. 
 Discussion of the performance of various kernel methods can be found in 
 \cite{kernel_learning}.
+
+In this section we have briefly discussed how \texit{eigenfaces} can be
+used to recognize a face. This section is not pertinent to face removal, 
+but is an extension should we choose to remove only certain faces from 
+a scene and not others. 
 
 \subsection{Distributing \textit{Eigenfaces} to Big Data Processes}
 Most implementations of face recognition rely on the fact that
 all the data is located on one disk and is run on a single machine. 
 For this paper, we do not make that assumption and explore the use
 of tools such as Spark \cite{spark} and Storm \cite{storm} to create
-resilient data that is both resilient and distributed so that many 
-calculations can be performed. Figure \ref{fig:distributed_computing_model} 
+data that is both resilient and distributed so that many 
+calculations can be performed in parallel and collected at the end of a job. 
+Figure \ref{fig:distributed_computing_model} 
 illustrates our current data structure without the use of any
 distributed computing tools.
 
