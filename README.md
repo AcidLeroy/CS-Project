@@ -20,3 +20,9 @@ python2 SciKitLearn_face_recognition.py
 thunder LoadAndDisplayImage.py
 ###Loading and displaing image using {thudner} and {OpenCV2}
 thunder src/Tutorials/ThunderCv2.py
+
+##Project
+###Face detection
+thunder src/Project/FaceDetect.py
+ -) Please go through the code and change the directory. The images
+    need to be in 'png' format to be loaded.
