@@ -1,6 +1,7 @@
 # Load thunder
 from pyspark import SparkContext, SparkConf
 from thunder import Colorize, ThunderContext
+import os
 image = Colorize.image
 
 # Load OpenCV2
@@ -15,7 +16,7 @@ sc = SparkContext(conf=conf)
 tsc = ThunderContext(sc)
 
 # Load image using thunder
-data = tsc.loadImages('/home/vj/Desktop/CS-Project/src/Tutorials/mush.png',inputFormat='png')
+data = tsc.loadImages(os.path.dirname(os.path.realpath(__file__))+'/mush.png',inputFormat='png')
 img  = data.first()[1]
 
 # Display image using OpenCV2
