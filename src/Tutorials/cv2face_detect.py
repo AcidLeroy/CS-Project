@@ -12,6 +12,7 @@ faceCascade = cv2.CascadeClassifier(cascPath)
 image = cv2.imread(imagePath)
 gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
+print(gray)
 # Detect faces in the image
 faces = faceCascade.detectMultiScale(
     gray,
