@@ -1,4 +1,4 @@
-from Project.ParseAnnotation import parse_annotation
+from Project.ParseAnnotation import parse_annotation, get_ellipse_files
 import pandas as pd
 from pandas.util.testing import assert_frame_equal
 from mock import MagicMock
@@ -43,3 +43,9 @@ def test_parse2_annnotation():
     actual_df = parse_annotation(mock_file)
 
     assert_frame_equal(true_df, actual_df)
+
+def test_get_ellipse_files():
+    file_list = ['FDDB-fold-01-ellipseList.txt', 'FDDB-fold-10-ellipseList.txt', 'FDDB-fold-10.txt']
+    expected_list = ['FDDB-fold-01-ellipseList.txt', 'FDDB-fold-10-ellipseList.txt']
+    actual_list = get_ellipse_files(file_list)
+    assert expected_list == actual_list
