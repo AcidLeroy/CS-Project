@@ -29,6 +29,9 @@
 \usepackage{url}
 \usepackage{amsmath}
 \usepackage{placeins}
+\usepackage{algpseudocode}
+\usepackage{subfig}
+\usepackage{amsfonts}
 % Use the `endfloat' package to move figures and tables to the end
 % of the paper. Useful for `submission' mode.
 %\usepackage {endfloat}
@@ -398,9 +401,76 @@ modify much of our existing code.
 % SECTION METHODOLOGY
 %----------------------------------------------------------------------
 \section{Methodology and Experiments}
-\subsection{Machine Learning}
-\subsection{Distributed Computing}
 
+Thunder \cite{thunder}, a library built on spark \cite{spark}, which analyzes large-scale
+spatial and temporal data is used to load images. Images are stored as ({\tt key}, {\tt value})
+pair, where {\tt key} $\in$ $\mathbb{Z}$ and {\tt value} has image information. Similar to
+Spark's {\bf map()}, Thunder provides transformation method known as {\bf apply()}. Which
+can be utilized to go through each image and process as necessasary.\\
+\begin{figure}[h!]
+  \begin{algorithmic}[1]
+    \Function{obscureFaces}{\tt p} \Comment p = absolute path
+		\State {\tt tsc} $\gets$ Thunder context
+		\State {\tt cv\_2} $\gets$ OpenCV 2 libarary
+		\State {\tt allImgRdd} $\gets$ {\tt tsc.}{\bf loadImages}({\tt p})
+		\State {\tt grayImgRdd} $\gets$ {\bf convertToGray}({\tt allImgRdd})
+		\State {\tt FaceRdd} $\gets$ {\bf FrontalFace}({\tt grayImgRdd}) \Comment Uses HAAR Cascade
+		\State {\tt ObscureRdd} $\gets$ {\bf paintBlack}({\tt FaceRdd}) \Comment Fills the rectagles with black
+		\State {\bf WriteImages({\tt ObscureRdd})} \Comment write out gray images with faces obscured
+    \EndFunction
+  \end{algorithmic}
+  \caption{Obscure faces}
+\end{figure}
+Image processing tools are imported from OpenCV \cite{opencv}. OpenCV provides plethora of standard
+image processing and computer vision tools and has python bindings, making it an ideal
+library to use in our project. Specifically Haar Cascades is used to detect faces. Training
+to this method(Haar Cascades) is provided via extensible markup language(xml), which is provided
+by OpenCV.
+%----------------------------------------------------------------------
+% SECTION RESULTS
+%----------------------------------------------------------------------
+\section{Results}
+\begin{figure}
+	\centering
+	\subfloat[Original image, image1]{
+	\includegraphics[width=0.5\linewidth]{figures/OrigOnePerson.png}
+	}
+	\subfloat[Obscured image, image1 ]{
+	\includegraphics[width=0.5\linewidth]{figures/ObsOnePerson.png}
+	}\\
+	\subfloat[Original image, image2]{
+	\includegraphics[width=0.5\linewidth]{figures/OrigTwoPeople.png}
+	}
+	\subfloat[Obscured image, image2]{
+	\includegraphics[width=0.5\linewidth]{figures/ObsTwoPeople.png}
+	}\\
+	\subfloat[Original image, image3]{
+	\includegraphics[width=0.5\linewidth]{figures/OrigFailed.png}
+	}
+	\subfloat[Failed case, image3]{
+	\includegraphics[width=0.5\linewidth]{figures/ObsFailed.png}
+	}
+	\caption{Faces obscured using Haar cascasdes provided by OpenCV in Thunder framework}
+\end{figure}
+
+\begin{table}[h!]
+	\begin{tabular}{|p{6cm} | p{2cm}|}
+		\hline
+		{\bf Description} & {\bf Value}\\
+		\hline
+		\hline
+		Total \# faces detected & 77\\
+		Correctly Identified (True Positive) & 69 \\
+		Marked as face but it's not a face (False positive) & 8 \\
+		\% of True positives & 89\%\\
+		\% of False positives & 10\%\\
+		\hline
+		Total \# faces in GT & 79\\
+		Missed faces & 9\\
+		\% of False Negatives & 11.9\%\\
+		\hline
+	\end{tabular}
+\end{table}
 %----------------------------------------------------------------------
 % SECTION Conclusion
 %----------------------------------------------------------------------
