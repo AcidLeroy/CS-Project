@@ -401,7 +401,7 @@ modify much of our existing code.
 % SECTION METHODOLOGY
 %----------------------------------------------------------------------
 \section{Methodology and Experiments}
-
+\subsection{Method}\label{sec:MethodExp}
 Thunder \cite{thunder}, a library built on spark \cite{spark}, which analyzes large-scale
 spatial and temporal data is used to load images. Images are stored as ({\tt key}, {\tt value})
 pair, where {\tt key} $\in$ $\mathbb{Z}$ and {\tt value} has image information. Similar to
@@ -426,6 +426,16 @@ image processing and computer vision tools and has python bindings, making it an
 library to use in our project. Specifically Haar Cascades is used to detect faces. Training
 to this method(Haar Cascades) is provided via extensible markup language(xml), which is provided
 by OpenCV.
+
+\subsection{Subjective analysis}
+Obscured images produced by the method described in section \ref{sec:MethodExp} are
+analyzed subjectively to determine performance. Each image is analyzed for cases of
+\begin{itemize}
+	\item True positive(TP): Faces we accurately discoverd and obscured.
+	\item False positive(FP): Background is detected as face and obscured.
+	\item False negative(FN): Faces are not detected.
+\end{itemize}
+Using above analysis, our method accuracy is $89\%$. 
 %----------------------------------------------------------------------
 % SECTION RESULTS
 %----------------------------------------------------------------------
@@ -455,6 +465,8 @@ by OpenCV.
 \FloatBarrier
 
 \begin{table}[h!]
+	\caption{Results}
+	\label{tab:results}
 	\begin{tabular}{|p{6cm} | p{2cm}|}
 		\hline
 		{\bf Description} & {\bf Value}\\
@@ -478,20 +490,20 @@ by OpenCV.
 \section{Conclusion and Discussion}
 \PARstart In this paper we have investigated some of the techniques that can be used for face detection
 in combination with \textit{big-data} processing tools. We successfully ran several images through
-our pipeline and were able to detect most of the faces. In order to make this a successful project however, 
-we would need to classify 100\% of the faces in order to pass an IRB process. Without that guarantee, 
+our pipeline and were able to detect most of the faces. In order to make this a successful project however,
+we would need to classify 100\% of the faces in order to pass an IRB process. Without that guarantee,
 we would still need a human in the loop to verify that no faces were being release to those who do
 not have IRB approval. That said, what we have done would significantly reduce the amount of manual
-labor needed to obscure faces using big data techniques to outside researchers. 
+labor needed to obscure faces using big data techniques to outside researchers.
 
-Although we did not succeed in reading videos, 
-we were able to successfully read large datasets of images. As a result, we could extend this work 
+Although we did not succeed in reading videos,
+we were able to successfully read large datasets of images. As a result, we could extend this work
 to use tools like FFMPEG to convert some of our videos to images such that we could perform this
 type of processing. Another option would be to contribute to some of these open source projects
-and figure out how to extend their frame work to read in popular video compression types such as 
+and figure out how to extend their frame work to read in popular video compression types such as
 MPEG and H.264. We would also need to investigate if all the compute nodes could process videos sequentially
 if we were to extend this work to pattern recognition in motions (i.e. typing on a keyboard or writing
-on a piece of paper). 
+on a piece of paper).
 
 
 \bibliography{project.bib}
