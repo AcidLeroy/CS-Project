@@ -27,6 +27,13 @@ def create_binary_image_from_ellipses(image, ellipses):
          new_image = create_ellipse_image(new_image, ellipse[0], ellipse[1], ellipse[2], ellipse[3], ellipse[4])
      return new_image
 
+def get_ellipse_list(string_array):
+    ellipses = []
+    for entry in string_array:
+        ellipses.append(entry.split())
+    return ellipses
+
+
 def visit_all_images(path_to_hdf5):
     df = pd.read_hdf(path_to_hdf5, 'table')
     fddb_root = os.environ['FDDB_ROOT']  # Root directory of the FDDB dataset
