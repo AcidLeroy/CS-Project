@@ -10,7 +10,6 @@ def parse_annotation(file_handle):
     while line:
         filename = re.search(r'(.*\/.*)', line)
         if filename:
-            # print('filename is: ', filename.group(1))
             pass
         else:
             line = file_handle.readline()
@@ -19,14 +18,11 @@ def parse_annotation(file_handle):
         data_dict ={'filename':  filename.group(1)}
         num_faces = int(file_handle.readline())
         ellipses = []
-        # print('Number of faces is: ', num_faces)
         for ellipse_idx in range(0, num_faces):
             ellipse_val = file_handle.readline()
-            # print ('ellipse idx', ellipse_idx, ' = ', ellipse_val)
             ellipses.append(ellipse_val)
         data_dict['ellipse'] = ellipses
         tmp = pd.DataFrame(data_dict)
-        # print('tmp = ', tmp)
         df = pd.concat([df, tmp])
         line = file_handle.readline()
 
