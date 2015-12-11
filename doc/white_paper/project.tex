@@ -92,7 +92,7 @@
   using these \textit{big-data} techniques to perform face obscuration on very large
   video and image datasets collected by the Advancing Out of School Learning in
   Mathematics and Engineering (AOLME) program so that these datasets can be
-  safely redistributed. As ulterior motive, we also set in place a frame for
+  safely redistributed. As ulterior motive, we also set in place a framework for
   which we would use to perform other types of detections and activity
   recognition studies. For the purpose of this paper, we do not use any images
   from the real AOLME dataset, but rather images to illustrate our intention.
@@ -406,16 +406,16 @@ Thunder \cite{thunder}, a library built on spark \cite{spark}, which analyzes la
 spatial and temporal data is used to load images. Images are stored as ({\tt key}, {\tt value})
 pair, where {\tt key} $\in$ $\mathbb{Z}$ and {\tt value} has image information. Similar to
 Spark's {\bf map()}, Thunder provides transformation method known as {\bf apply()}. Which
-can be utilized to go through each image and process as necessasary.\\
+can be utilized to go through each image and process as necessary.\\
 \begin{figure}[h!]
   \begin{algorithmic}[1]
     \Function{obscureFaces}{\tt p} \Comment p = absolute path
 		\State {\tt tsc} $\gets$ Thunder context
-		\State {\tt cv\_2} $\gets$ OpenCV 2 libarary
+		\State {\tt cv\_2} $\gets$ OpenCV 2 library
 		\State {\tt allImgRdd} $\gets$ {\tt tsc.}{\bf loadImages}({\tt p})
 		\State {\tt grayImgRdd} $\gets$ {\bf convertToGray}({\tt allImgRdd})
 		\State {\tt FaceRdd} $\gets$ {\bf FrontalFace}({\tt grayImgRdd}) \Comment Uses HAAR Cascade
-		\State {\tt ObscureRdd} $\gets$ {\bf paintBlack}({\tt FaceRdd}) \Comment Fills the rectagles with black
+		\State {\tt ObscureRdd} $\gets$ {\bf paintBlack}({\tt FaceRdd}) \Comment Fills the rectangles with black
 		\State {\bf WriteImages({\tt ObscureRdd})} \Comment write out gray images with faces obscured
     \EndFunction
   \end{algorithmic}
@@ -430,28 +430,29 @@ by OpenCV.
 % SECTION RESULTS
 %----------------------------------------------------------------------
 \section{Results}
-\begin{figure}
+\begin{figure}[h]
 	\centering
 	\subfloat[Original image, image1]{
-	\includegraphics[width=0.5\linewidth]{figures/OrigOnePerson.png}
+	\includegraphics[width=0.4\linewidth]{figures/OrigOnePerson.png}
 	}
 	\subfloat[Obscured image, image1 ]{
-	\includegraphics[width=0.5\linewidth]{figures/ObsOnePerson.png}
+	\includegraphics[width=0.4\linewidth]{figures/ObsOnePerson.png}
 	}\\
 	\subfloat[Original image, image2]{
-	\includegraphics[width=0.5\linewidth]{figures/OrigTwoPeople.png}
+	\includegraphics[width=0.4\linewidth]{figures/OrigTwoPeople.png}
 	}
 	\subfloat[Obscured image, image2]{
-	\includegraphics[width=0.5\linewidth]{figures/ObsTwoPeople.png}
+	\includegraphics[width=0.4\linewidth]{figures/ObsTwoPeople.png}
 	}\\
 	\subfloat[Original image, image3]{
-	\includegraphics[width=0.5\linewidth]{figures/OrigFailed.png}
+	\includegraphics[width=0.4\linewidth]{figures/OrigFailed.png}
 	}
 	\subfloat[Failed case, image3]{
-	\includegraphics[width=0.5\linewidth]{figures/ObsFailed.png}
+	\includegraphics[width=0.4\linewidth]{figures/ObsFailed.png}
 	}
 	\caption{Faces obscured using Haar cascasdes provided by OpenCV in Thunder framework}
 \end{figure}
+\FloatBarrier
 
 \begin{table}[h!]
 	\begin{tabular}{|p{6cm} | p{2cm}|}
@@ -474,8 +475,24 @@ by OpenCV.
 %----------------------------------------------------------------------
 % SECTION Conclusion
 %----------------------------------------------------------------------
-\section{Conclusion}
-\PARstart Conclusion to paper
+\section{Conclusion and Discussion}
+\PARstart In this paper we have investigated some of the techniques that can be used for face detection
+in combination with \textit{big-data} processing tools. We successfully ran several images through
+our pipeline and were able to detect most of the faces. In order to make this a successful project however, 
+we would need to classify 100\% of the faces in order to pass an IRB process. Without that guarantee, 
+we would still need a human in the loop to verify that no faces were being release to those who do
+not have IRB approval. That said, what we have done would significantly reduce the amount of manual
+labor needed to obscure faces using big data techniques to outside researchers. 
+
+Although we did not succeed in reading videos, 
+we were able to successfully read large datasets of images. As a result, we could extend this work 
+to use tools like FFMPEG to convert some of our videos to images such that we could perform this
+type of processing. Another option would be to contribute to some of these open source projects
+and figure out how to extend their frame work to read in popular video compression types such as 
+MPEG and H.264. We would also need to investigate if all the compute nodes could process videos sequentially
+if we were to extend this work to pattern recognition in motions (i.e. typing on a keyboard or writing
+on a piece of paper). 
+
 
 \bibliography{project.bib}
 \bibliographystyle{ieeetr}
