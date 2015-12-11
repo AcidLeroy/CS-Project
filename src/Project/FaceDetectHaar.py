@@ -2,7 +2,6 @@ import cv2
 import os
 import numpy as np
 
-
 class FaceDetector(object):
     def __init__(self):
         cv_root = os.environ['OPENCV_ROOT']
