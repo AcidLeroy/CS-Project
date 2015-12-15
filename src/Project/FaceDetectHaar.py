@@ -27,7 +27,8 @@ class FaceDetector(object):
         rectangles = np.array([])
         for cascade in self.cascades:
             rects = self.detect_faces(image, self.cascades[cascade])
-            rectangles = np.vstack([rectangles, rects]) if rectangles.size else rects
+            if type(rects) is np.ndarray:
+                rectangles = np.vstack([rectangles, rects]) if rectangles.size else rects
         return rectangles
 
 
